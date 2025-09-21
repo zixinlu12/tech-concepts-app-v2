@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专业术语词典</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #22d3ee;
+            --primary-dark: #0ea5e9;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.5);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: var(--background);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #22d3ee, #3b82f6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--surface);
+            padding: 0.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .view-btn.active {
+            background: var(--background);
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Hero Search Section */
+        .hero {
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #f1f5f9 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-feature {
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        /* Search Box */
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 3.5rem 1rem 1.25rem;
+            font-size: 1.125rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--background);
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+        
+        /* Quick Access Tags */
+        .quick-access {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .quick-tag {
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quick-tag:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Filter Section - 确保完整包含两部分 */
+        .filter-section {
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+        }
+        
+        /* Domain Toggle - 领域切换按钮 */
+        .domain-toggle-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 0 0.75rem;
+            text-align: center;
+            display: block;
+        }
+        
+        .domain-toggle {
+            display: inline-flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+        }
+        
+        .domain-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .domain-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .domain-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
+        }
+        
+        /* Category Filters - 分类过滤器 */
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-container::-webkit-scrollbar {
+            height: 3px;
+        }
+        
+        .filter-container::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 2px;
+        }
+        
+        .filter-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .filter-btn {
+            padding: 0.625rem 1.25rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.125rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        /* Grid View */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .concept-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .concept-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        
+        .concept-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .concept-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .concept-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        
+        .concept-card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .concept-card-category {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.25rem 0.625rem;
+            background: var(--surface);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* List View */
+        .concepts-list {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .concepts-list.active {
+            display: flex;
+        }
+        
+        .concepts-grid.hidden {
+            display: none;
+        }
+        
+        .concept-list-item {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .concept-list-item:hover {
+            background: var(--surface);
+            border-color: var(--primary);
+        }
+        
+        .list-item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .list-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .list-item-title {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.125rem;
+        }
+        
+        .list-item-preview {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .list-item-category {
+            padding: 0.25rem 0.625rem;
+            background: var(--surface);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        
+        /* Results Info */
+        .results-info {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .results-count {
+            font-weight: 500;
+        }
+        
+        .clear-search {
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        
+        .clear-search:hover {
+            text-decoration: underline;
+        }
+        
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .no-results-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 1rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--background);
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--surface);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--border);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-body p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .modal-body h2 {
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        
+        .modal-body h3 {
+            margin: 1.25rem 0 0.75rem;
+            color: var(--text);
+            font-size: 1.125rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .view-toggle {
+                display: none;
+            }
+            
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-container {
+                padding: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                <span>Simplified</span>
+            </a>
+            <div class="view-toggle">
+                <button class="view-btn active" id="gridViewBtn">
+                    <span>Grid</span>
+                </button>
+                <button class="view-btn" id="listViewBtn">
+                    <span>List</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Complex Concepts Made Simple</h1>
+        <p class="hero-subtitle">From Any Industry, In Plain Language. Making Complex Knowledge Accessible to Everyone</p>
+        
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="Search for a concept (e.g., Cloud Computing, Stock, API, Options)"
+                autocomplete="off"
+            >
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+            </svg>
+        </div>
+        
+        <div class="quick-access" id="quickAccess">
+            <!-- Popular terms will be added dynamically -->
+        </div>
+    </section>
+    
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <!-- Domain Toggle - 领域切换按钮 -->
+        <div class="domain-toggle-container">
+            <div class="domain-toggle">
+                <button class="domain-btn active" data-domain="all">All Fields</button>
+                <button class="domain-btn" data-domain="tech">Technology</button>
+                <button class="domain-btn" data-domain="finance">Finance</button>
+            </div>
+        </div>
+        
+        <!-- Category Filters - 分类过滤标签 -->
+        <div class="filter-container" id="filterContainer">
+            <!-- Filters will be added dynamically based on domain -->
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="results-info" id="resultsInfo" style="display: none;">
+            <span class="results-count" id="resultsCount"></span>
+            <a class="clear-search" id="clearSearch">Clear search</a>
+        </div>
+        
+        <!-- Grid View -->
+        <div class="concepts-grid" id="conceptsGrid">
+            <!-- Cards will be added dynamically -->
+        </div>
+        
+        <!-- List View -->
+        <div class="concepts-list" id="conceptsList">
+            <!-- List items will be added dynamically -->
+        </div>
+        
+        <!-- No Results -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <div class="no-results-title">No results found</div>
+            <p>Try different keywords</p>
+        </div>
+        
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </main>
+    
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const TECH_GIST_URL = 'https://gist.githubusercontent.com/zixinlu12/55f7ce0a37b29341bf3194157a217e7d/raw/880c18c62fc99122cc8d948a5ba15eb10547e6ad/tech_explanations_v2.json';
+        const FINANCE_GIST_URL = ''; // 留空，暂时不加载金融数据
+        
+        // State
+        let concepts = [];
+        let filteredConcepts = [];
+        let currentCategory = 'all';
+        let currentDomain = 'all'; // 当前领域
+        let searchTerm = '';
+        let viewMode = 'grid';
+        
+        // Category configurations - 扩展分类
+        const categoryConfig = {
+            all: { name: 'All', gradient: 'linear-gradient(135deg, #667eea, #764ba2)' },
+            // 科技类
+            infrastructure: { name: 'Infrastructure', gradient: 'linear-gradient(135deg, #667eea, #764ba2)' },
+            computing: { name: 'Computing', gradient: 'linear-gradient(135deg, #f093fb, #f5576c)' },
+            ai: { name: 'AI & Data', gradient: 'linear-gradient(135deg, #4facfe, #00f2fe)' },
+            networking: { name: 'Networking', gradient: 'linear-gradient(135deg, #fa709a, #fee140)' },
+            development: { name: 'Development', gradient: 'linear-gradient(135deg, #30cfd0, #330867)' },
+            security: { name: 'Security', gradient: 'linear-gradient(135deg, #ff6b6b, #4ecdc4)' },
+            data: { name: 'Data', gradient: 'linear-gradient(135deg, #a8edea, #fed6e3)' },
+            // 金融类
+            banking: { name: 'Banking', gradient: 'linear-gradient(135deg, #f2994a, #f2c94c)' },
+            investment: { name: 'Investment', gradient: 'linear-gradient(135deg, #89f7fe, #66a6ff)' },
+            trading: { name: 'Trading', gradient: 'linear-gradient(135deg, #fc6076, #ff9a44)' },
+            crypto: { name: 'Cryptocurrency', gradient: 'linear-gradient(135deg, #a17fe0, #5d26c1)' },
+            insurance: { name: 'Insurance', gradient: 'linear-gradient(135deg, #59c173, #a17fe0)' },
+            fintech: { name: 'Fintech', gradient: 'linear-gradient(135deg, #00cdac, #8ddad5)' }
+        };
+        
+        // Initialize
+        async function init() {
+            await loadConcepts();
+            setupEventListeners();
+            // 只在数据加载成功后渲染
+            if (concepts && concepts.length > 0) {
+                renderFilters();
+                renderQuickAccess();
+                filterAndDisplay();
+            }
+        }
+        
+        // Load concepts
+        async function loadConcepts() {
+            try {
+                console.log('Starting to load concepts...');
+                
+                // 加载科技数据
+                const techResponse = await fetch(TECH_GIST_URL);
+                let techData = [];
+                
+                if (techResponse && techResponse.ok) {
+                    techData = await techResponse.json();
+                    console.log(`Loaded ${techData.length} tech concepts`);
+                }
+                
+                // 加载金融数据（如果URL存在）
+                let financeData = [];
+                if (FINANCE_GIST_URL && FINANCE_GIST_URL !== '') {
+                    try {
+                        const financeResponse = await fetch(FINANCE_GIST_URL);
+                        if (financeResponse && financeResponse.ok) {
+                            financeData = await financeResponse.json();
+                            console.log(`Loaded ${financeData.length} finance concepts`);
+                        }
+                    } catch (error) {
+                        console.log('Finance data not available');
+                    }
+                }
+                
+                // 合并并处理数据
+                const allData = [
+                    ...techData.map(item => ({...item, domain: 'tech'})),
+                    ...financeData.map(item => ({...item, domain: 'finance'}))
+                ];
+                
+                if (allData.length === 0) {
+                    // 数据加载失败，显示错误信息
+                    document.getElementById('loading').innerHTML = `
+                        <div style="text-align: center; padding: 3rem;">
+                            <p style="color: var(--text-secondary); font-size: 1.125rem;">Failed to load data</p>
+                            <p style="color: var(--text-secondary); margin-top: 1rem;">Please check your connection and try again</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                concepts = processConceptsData(allData);
+                console.log(`Total processed concepts: ${concepts.length}`);
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error loading concepts:', error);
+                // 显示错误信息
+                document.getElementById('loading').innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <p style="color: var(--text-secondary); font-size: 1.125rem;">数据加载出错</p>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">错误信息：${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Process concepts data - 支持金融概念分类
+        function processConceptsData(data) {
+            // 定义热门概念的权重
+            const popularityScores = {
+                // 科技类
+                'cloud': 100,
+                'cloud computing': 100,
+                '云计算': 100,
+                'ai': 95,
+                'artificial intelligence': 95,
+                '人工智能': 95,
+                'machine learning': 90,
+                '机器学习': 90,
+                'chatgpt': 85,
+                // 金融类
+                'stock': 85,
+                '股票': 85,
+                'etf': 80,
+                'ipo': 75,
+                'bond': 70,
+                '债券': 70,
+                'derivative': 65,
+                '衍生品': 65,
+                'option': 60,
+                '期权': 60,
+                'futures': 60,
+                '期货': 60,
+                'hedge fund': 70,
+                '对冲基金': 70,
+                'mutual fund': 65,
+                '共同基金': 65,
+                'bitcoin': 75,
+                '比特币': 75,
+                'defi': 70,
+                'nft': 50
+            };
+            
+            const processed = data.map(item => {
+                const name = item.concept.toLowerCase();
+                const domain = item.domain || 'tech'; // 默认为科技领域
+                let category = 'infrastructure';
+                
+                // 根据领域分配分类
+                if (domain === 'finance') {
+                    // 金融领域分类
+                    if (name.includes('bank') || name.includes('银行') || name.includes('loan') || name.includes('贷款')) {
+                        category = 'banking';
+                    } else if (name.includes('stock') || name.includes('股票') || name.includes('bond') || name.includes('债券') || name.includes('fund') || name.includes('基金')) {
+                        category = 'investment';
+                    } else if (name.includes('trade') || name.includes('交易') || name.includes('option') || name.includes('期权') || name.includes('future') || name.includes('期货')) {
+                        category = 'trading';
+                    } else if (name.includes('crypto') || name.includes('加密') || name.includes('bitcoin') || name.includes('比特币') || name.includes('defi')) {
+                        category = 'crypto';
+                    } else if (name.includes('insurance') || name.includes('保险')) {
+                        category = 'insurance';
+                    } else if (name.includes('fintech') || name.includes('金融科技') || name.includes('payment') || name.includes('支付')) {
+                        category = 'fintech';
+                    } else {
+                        category = 'investment'; // 默认金融分类
+                    }
+                } else {
+                    // 科技领域分类
+                    if (name.includes('ai') || name.includes('machine learning') || name.includes('neural') || 
+                        name.includes('deep learning') || name.includes('nlp') || name.includes('computer vision') ||
+                        name.includes('人工智能') || name.includes('机器学习') || name.includes('深度学习')) {
+                        category = 'ai';
+                    } else if (name.includes('cloud') || name.includes('server') || name.includes('container') || 
+                               name.includes('docker') || name.includes('kubernetes') || name.includes('云')) {
+                        category = 'infrastructure';
+                    } else if (name.includes('cpu') || name.includes('gpu') || name.includes('ram') || 
+                               name.includes('quantum') || name.includes('edge computing') || name.includes('量子')) {
+                        category = 'computing';
+                    } else if (name.includes('network') || name.includes('5g') || name.includes('iot') || 
+                               name.includes('wifi') || name.includes('bluetooth') || name.includes('网络')) {
+                        category = 'networking';
+                    } else if (name.includes('api') || name.includes('devops') || name.includes('agile') || 
+                               name.includes('ci/cd') || name.includes('git')) {
+                        category = 'development';
+                    } else if (name.includes('security') || name.includes('encryption') || name.includes('firewall') || 
+                               name.includes('vpn') || name.includes('安全')) {
+                        category = 'security';
+                    } else if (name.includes('data') || name.includes('database') || name.includes('analytics') || 
+                               name.includes('big data') || name.includes('数据')) {
+                        category = 'data';
+                    }
+                }
+                
+                // Generate initials
+                const words = item.concept.split(/[\s-]+/);
+                let initials;
+                if (words.length === 1) {
+                    initials = words[0].substring(0, 2).toUpperCase();
+                } else {
+                    initials = words.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+                }
+                
+                // 计算热度分数
+                let popularity = 0;
+                for (const [keyword, score] of Object.entries(popularityScores)) {
+                    if (name.includes(keyword)) {
+                        popularity = Math.max(popularity, score);
+                    }
+                }
+                // 如果没有匹配的，给个基础分
+                if (popularity === 0) {
+                    popularity = Math.random() * 30 + 10;
+                }
+                
+                return {
+                    id: item.concept.toLowerCase().replace(/\s+/g, '-'),
+                    name: item.concept,
+                    category: category,
+                    domain: domain,
+                    description: item.explanation,
+                    initials: initials,
+                    popularity: popularity
+                };
+            });
+            
+            // 按热度排序（从高到低）
+            return processed.sort((a, b) => b.popularity - a.popularity);
+        }
+        
+        // Render filters - 动态根据领域显示分类
+        function renderFilters() {
+            const container = document.getElementById('filterContainer');
+            // 确保完全清空容器
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            
+            const categoryCounts = {};
+            
+            // 根据当前领域过滤概念
+            const domainConcepts = currentDomain === 'all' 
+                ? concepts 
+                : concepts.filter(c => c.domain === currentDomain);
+            
+            // Count concepts per category
+            domainConcepts.forEach(c => {
+                categoryCounts[c.category] = (categoryCounts[c.category] || 0) + 1;
+            });
+            
+            // 决定显示哪些分类
+            let categoriesToShow = ['all'];
+            if (currentDomain === 'tech' || currentDomain === 'all') {
+                categoriesToShow.push('infrastructure', 'computing', 'ai', 'networking', 'development', 'security', 'data');
+            }
+            if (currentDomain === 'finance' || currentDomain === 'all') {
+                categoriesToShow.push('banking', 'investment', 'trading', 'crypto', 'insurance', 'fintech');
+            }
+            
+            // 使用Set去重，防止重复
+            categoriesToShow = [...new Set(categoriesToShow)];
+            
+            // Create filter buttons
+            categoriesToShow.forEach(key => {
+                if (!categoryConfig[key]) return;
+                
+                const count = key === 'all' ? domainConcepts.length : (categoryCounts[key] || 0);
+                if (count === 0 && key !== 'all') return;
+                
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn' + (key === currentCategory ? ' active' : '');
+                btn.dataset.category = key;
+                btn.innerHTML = `
+                    <span>${categoryConfig[key].name}</span>
+                    <span class="filter-count">${count}</span>
+                `;
+                
+                // 直接在创建时添加事件监听器
+                btn.addEventListener('click', () => {
+                    selectCategory(key);
+                });
+                
+                container.appendChild(btn);
+            });
+        }
+        
+        // Select category - 分离出来避免重复绑定
+        function selectCategory(category) {
+            currentCategory = category;
+            // 更新活动状态
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+            filterAndDisplay();
+        }
+        
+        // Render quick access tags
+        function renderQuickAccess() {
+            const container = document.getElementById('quickAccess');
+            // 清空已有内容，防止重复
+            container.innerHTML = '';
+            
+            const popularTerms = ['Cloud Computing', 'AI', 'Stock', 'Blockchain', 'ETF', 'Options', 'API'];
+            
+            popularTerms.forEach(term => {
+                const tag = document.createElement('button');
+                tag.className = 'quick-tag';
+                tag.textContent = term;
+                tag.addEventListener('click', () => {
+                    document.getElementById('searchInput').value = term;
+                    searchTerm = term;
+                    filterAndDisplay();
+                });
+                container.appendChild(tag);
+            });
+        }
+        
+        // Filter and display concepts - 支持领域筛选
+        function filterAndDisplay() {
+            // Filter by domain first
+            let filtered = currentDomain === 'all' 
+                ? [...concepts]
+                : concepts.filter(c => c.domain === currentDomain);
+            
+            // Then filter by category
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(c => c.category === currentCategory);
+            }
+            
+            // Filter by search term
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                filtered = filtered.filter(c => 
+                    c.name.toLowerCase().includes(term) ||
+                    c.description.toLowerCase().includes(term)
+                );
+            }
+            
+            filteredConcepts = filtered;
+            
+            // Update results info
+            const resultsInfo = document.getElementById('resultsInfo');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            if (searchTerm) {
+                resultsInfo.style.display = 'flex';
+                resultsCount.textContent = `Found ${filtered.length} results for "${searchTerm}"`;
+            } else {
+                resultsInfo.style.display = 'none';
+            }
+            
+            // Display concepts
+            if (filtered.length === 0) {
+                document.getElementById('conceptsGrid').style.display = 'none';
+                document.getElementById('conceptsList').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+            } else {
+                document.getElementById('noResults').style.display = 'none';
+                if (viewMode === 'grid') {
+                    displayGrid(filtered);
+                } else {
+                    displayList(filtered);
+                }
+            }
+        }
+        
+        // Display grid view
+        function displayGrid(concepts) {
+            const grid = document.getElementById('conceptsGrid');
+            const list = document.getElementById('conceptsList');
+            
+            grid.style.display = 'grid';
+            list.style.display = 'none';
+            grid.innerHTML = '';
+            
+            concepts.forEach(concept => {
+                const card = createCard(concept);
+                grid.appendChild(card);
+            });
+        }
+        
+        // Display list view
+        function displayList(concepts) {
+            const grid = document.getElementById('conceptsGrid');
+            const list = document.getElementById('conceptsList');
+            
+            grid.style.display = 'none';
+            list.style.display = 'flex';
+            list.innerHTML = '';
+            
+            concepts.forEach(concept => {
+                const item = createListItem(concept);
+                list.appendChild(item);
+            });
+        }
+        
+        // Create card element
+        function createCard(concept) {
+            const card = document.createElement('div');
+            card.className = 'concept-card';
+            
+            const gradient = categoryConfig[concept.category]?.gradient || categoryConfig.default.gradient;
+            const preview = concept.description.substring(0, 100).replace(/[#*\n]/g, ' ').trim() + '...';
+            
+            // 添加热门标记（热度>70的显示火标记）
+            const hotBadge = concept.popularity > 70 ? '<span style="position: absolute; top: 10px; left: 10px; font-size: 1.2rem;">🔥</span>' : '';
+            
+            card.innerHTML = `
+                ${hotBadge}
+                <div class="concept-card-category">${categoryConfig[concept.category]?.name || 'Other'}</div>
+                <div class="concept-card-header">
+                    <div class="concept-icon" style="background: ${gradient}">${concept.initials}</div>
+                    <h3 class="concept-card-title">${concept.name}</h3>
+                </div>
+                <p class="concept-card-description">${preview}</p>
+            `;
+            
+            card.addEventListener('click', () => showModal(concept));
+            return card;
+        }
+        
+        // Create list item element
+        function createListItem(concept) {
+            const item = document.createElement('div');
+            item.className = 'concept-list-item';
+            
+            const gradient = categoryConfig[concept.category]?.gradient || categoryConfig.default.gradient;
+            const preview = concept.description.substring(0, 80).replace(/[#*\n]/g, ' ').trim() + '...';
+            
+            item.innerHTML = `
+                <div class="list-item-icon" style="background: ${gradient}">${concept.initials}</div>
+                <div class="list-item-content">
+                    <div class="list-item-title">${concept.name}</div>
+                    <div class="list-item-preview">${preview}</div>
+                </div>
+                <div class="list-item-category">${categoryConfig[concept.category]?.name || '其他'}</div>
+            `;
+            
+            item.addEventListener('click', () => showModal(concept));
+            return item;
+        }
+        
+        // Show modal - 改进的markdown转换
+        function showModal(concept) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            title.textContent = concept.name;
+            
+            // Enhanced content formatting - 处理中文内容
+            let content = concept.description || concept.explanation || '';
+            
+            let formatted = content
+                // Handle section breaks
+                .replace(/---+/g, '<hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border);">')
+                // Convert headers - 支持中文标题
+                .replace(/^## (.+)$/gm, '<h2 style="color: var(--primary); font-size: 1.25rem; margin: 1.5rem 0 1rem; font-weight: 600;">$1</h2>')
+                .replace(/^### (.+)$/gm, '<h3 style="color: var(--text); font-size: 1.125rem; margin: 1.25rem 0 0.75rem; font-weight: 600;">$1</h3>')
+                // Convert bold text
+                .replace(/\*\*(.+?)\*\*/g, '<strong style="color: var(--primary); font-weight: 600;">$1</strong>')
+                // Convert bullet points
+                .replace(/^- (.+)$/gm, '<li style="margin: 0.5rem 0; line-height: 1.6;">$1</li>')
+                // Convert numbered lists
+                .replace(/^\d+\. (.+)$/gm, '<li style="margin: 0.5rem 0; line-height: 1.6;">$1</li>')
+                // Handle line breaks properly
+                .replace(/\n/g, '<br>')
+                // Split by double line breaks for paragraphs
+                .split('<br><br>')
+                .map(section => {
+                    section = section.trim();
+                    if (!section) return '';
+                    
+                    // Skip if it's already HTML (contains tags)
+                    if (section.includes('<h2>') || section.includes('<h3>') || section.includes('<hr')) {
+                        return section;
+                    }
+                    
+                    // Handle lists
+                    if (section.includes('<li>')) {
+                        const listContent = section.replace(/<br>/g, '');
+                        return `<ul style="margin: 1rem 0; padding-left: 1.5rem; color: var(--text);">${listContent}</ul>`;
+                    }
+                    
+                    // Regular paragraphs
+                    const cleanSection = section.replace(/<br>/g, ' ').trim();
+                    if (cleanSection) {
+                        return `<p style="margin: 1rem 0; line-height: 1.7; color: var(--text);">${cleanSection}</p>`;
+                    }
+                    return '';
+                })
+                .filter(section => section)
+                .join('');
+            
+            body.innerHTML = formatted;
+            
+            // Reset scroll positions
+            body.scrollTop = 0;
+            modal.scrollTop = 0;
+            
+            const modalContent = modal.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.scrollTop = 0;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Ensure scroll position reset
+            setTimeout(() => {
+                body.scrollTop = 0;
+                modal.scrollTop = 0;
+            }, 0);
+        }
+        
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Domain toggle - 防止重复绑定
+            const domainBtns = document.querySelectorAll('.domain-btn');
+            domainBtns.forEach(btn => {
+                // 使用标记避免重复绑定
+                if (!btn.hasAttribute('data-listener-added')) {
+                    btn.setAttribute('data-listener-added', 'true');
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        currentDomain = this.dataset.domain;
+                        currentCategory = 'all'; // 重置分类
+                        renderFilters(); // 重新渲染分类过滤器
+                        filterAndDisplay();
+                    });
+                }
+            });
+            
+            // Search input
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput.hasAttribute('data-listener-added')) {
+                searchInput.setAttribute('data-listener-added', 'true');
+                let searchTimeout;
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        searchTerm = e.target.value.trim();
+                        filterAndDisplay();
+                    }, 300);
+                });
+            }
+            
+            // Clear search
+            const clearBtn = document.getElementById('clearSearch');
+            if (clearBtn && !clearBtn.hasAttribute('data-listener-added')) {
+                clearBtn.setAttribute('data-listener-added', 'true');
+                clearBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchTerm = '';
+                    filterAndDisplay();
+                    searchInput.focus();
+                });
+            }
+            
+            // View toggle
+            const gridBtn = document.getElementById('gridViewBtn');
+            const listBtn = document.getElementById('listViewBtn');
+            
+            if (gridBtn && !gridBtn.hasAttribute('data-listener-added')) {
+                gridBtn.setAttribute('data-listener-added', 'true');
+                gridBtn.addEventListener('click', () => {
+                    viewMode = 'grid';
+                    gridBtn.classList.add('active');
+                    listBtn.classList.remove('active');
+                    filterAndDisplay();
+                });
+            }
+            
+            if (listBtn && !listBtn.hasAttribute('data-listener-added')) {
+                listBtn.setAttribute('data-listener-added', 'true');
+                listBtn.addEventListener('click', () => {
+                    viewMode = 'list';
+                    listBtn.classList.add('active');
+                    gridBtn.classList.remove('active');
+                    filterAndDisplay();
+                });
+            }
+            
+            // Modal close - 只绑定一次
+            const modalClose = document.getElementById('modalClose');
+            const modal = document.getElementById('modal');
+            
+            if (modalClose && !modalClose.hasAttribute('data-listener-added')) {
+                modalClose.setAttribute('data-listener-added', 'true');
+                modalClose.addEventListener('click', closeModal);
+            }
+            
+            if (modal && !modal.hasAttribute('data-listener-added')) {
+                modal.setAttribute('data-listener-added', 'true');
+                modal.addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) closeModal();
+                });
+            }
+            
+            // ESC key - 使用once选项确保只绑定一次
+            if (!window.escListenerAdded) {
+                window.escListenerAdded = true;
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeModal();
+                });
+            }
+        }
+        
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
