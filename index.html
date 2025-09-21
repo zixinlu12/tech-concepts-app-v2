@@ -672,8 +672,8 @@
     
     <!-- Hero Section -->
     <section class="hero">
-        <h1 class="hero-title">Complex concepts made simple</h1>
-        <p class="hero-subtitle">From any industry, in plain language. Making complex knowledge accessible to everyone</p>
+        <h1 class="hero-title">Complex Concepts Made Simple</h1>
+        <p class="hero-subtitle">From Any Industry, In Plain Language. Making Complex Knowledge Accessible to Everyone</p>
         
         <div class="search-container">
             <input 
@@ -1193,7 +1193,7 @@
             return item;
         }
         
-        // Show modal
+        // Show modal - 改进的markdown转换
         function showModal(concept) {
             const modal = document.getElementById('modal');
             const title = document.getElementById('modalTitle');
@@ -1201,22 +1201,44 @@
             
             title.textContent = concept.name;
             
-            // Format content
+            // Enhanced content formatting
             let formatted = concept.description
-                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-                .replace(/^- (.+)$/gm, '<li>$1</li>');
+                // Handle section breaks
+                .replace(/---+/g, '<hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border);">')
+                // Convert headers
+                .replace(/^## (.+)$/gm, '<h2 style="color: var(--primary); font-size: 1.25rem; margin: 1.5rem 0 1rem; font-weight: 600;">$1</h2>')
+                .replace(/^### (.+)$/gm, '<h3 style="color: var(--text); font-size: 1.125rem; margin: 1.25rem 0 0.75rem; font-weight: 600;">$1</h3>')
+                // Convert bold text
+                .replace(/\*\*(.+?)\*\*/g, '<strong style="color: var(--primary); font-weight: 600;">$1</strong>')
+                // Convert bullet points
+                .replace(/^- (.+)$/gm, '<li style="margin: 0.5rem 0;">$1</li>')
+                // Convert numbered lists
+                .replace(/^\d+\. (.+)$/gm, '<li style="margin: 0.5rem 0;">$1</li>')
+                // Handle paragraphs (split by double newlines)
+                .split('\n\n')
+                .map(section => {
+                    // Skip if it's already HTML (contains tags)
+                    if (section.includes('<h2>') || section.includes('<h3>') || section.includes('<hr')) {
+                        return section;
+                    }
+                    // Handle lists
+                    if (section.includes('<li>')) {
+                        return `<ul style="margin: 1rem 0; padding-left: 1.5rem;">${section}</ul>`;
+                    }
+                    // Regular paragraphs
+                    if (section.trim()) {
+                        return `<p style="margin: 1rem 0; line-height: 1.7; color: var(--text);">${section.trim()}</p>`;
+                    }
+                    return '';
+                })
+                .join('');
             
-            body.innerHTML = `<p>${formatted}</p>`;
+            body.innerHTML = formatted;
             
-            // 重置modal内容的滚动位置到顶部
+            // Reset scroll positions
             body.scrollTop = 0;
             modal.scrollTop = 0;
             
-            // 确保modal content也重置
             const modalContent = modal.querySelector('.modal-content');
             if (modalContent) {
                 modalContent.scrollTop = 0;
@@ -1225,7 +1247,7 @@
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // 延迟一下再次确保滚动位置
+            // Ensure scroll position reset
             setTimeout(() => {
                 body.scrollTop = 0;
                 modal.scrollTop = 0;
